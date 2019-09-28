@@ -1,15 +1,15 @@
-package com.apascualco.algoritmos.bfs;
+package com.apascualco.algoritmos.dfs;
 
 import java.util.*;
 
 import static java.util.Objects.isNull;
 
-public class BreadthFirstSearch {
+public class DepthFirstSearch {
 
-    private final Queue<NodeBFS> nodeBFS = new LinkedList<>();
-    private final List<NodeBFS> visited = new LinkedList<>();
+    private final Stack<NodeDFS> nodeDFS = new Stack<>();
+    private final List<NodeDFS> visited = new LinkedList<>();
 
-    Optional<NodeBFS> search(final int[] initialState, final int[] finalState) {
+    Optional<NodeDFS> search(final int[] initialState, final int[] finalState) {
         if(isNull(initialState)) {
             throw new NullPointerException("initialState shouldn't be null");
         }
@@ -17,12 +17,12 @@ public class BreadthFirstSearch {
             throw new NullPointerException("finalState shouldn't be null");
         }
         boolean foundFinalState = false;
-        Optional<NodeBFS> foundNode = Optional.empty();
-        final NodeBFS root = NodeBFS.of(initialState);
-        nodeBFS.add(root);
+        Optional<NodeDFS> foundNode = Optional.empty();
+        final NodeDFS root = NodeDFS.of(initialState);
+        nodeDFS.add(root);
         
-        while(!foundFinalState && nodeBFS.size() != 0) {
-            final NodeBFS nodeDFS = this.nodeBFS.poll();
+        while(!foundFinalState && nodeDFS.size() != 0) {
+            final NodeDFS nodeDFS = this.nodeDFS.pop();
             visited.add(nodeDFS);
             if(Arrays.equals(nodeDFS.getState(), finalState)) {
                 foundFinalState = true;
@@ -37,27 +37,27 @@ public class BreadthFirstSearch {
         return foundNode;
     }
 
-    private void processChild(final int[] state, final NodeBFS nodeDFS) {
-        final NodeBFS nodeDFSChild = NodeBFS.of(state);
+    private void processChild(final int[] state, final NodeDFS nodeDFS) {
+        final NodeDFS nodeDFSChild = NodeDFS.of(state);
         nodeDFSChild.setParent(nodeDFS);
-        if(!this.nodeBFS.contains(nodeDFSChild) && !visited.contains(nodeDFSChild)) {
-            this.nodeBFS.add(nodeDFSChild);
+        if(!this.nodeDFS.contains(nodeDFSChild) && !visited.contains(nodeDFSChild)) {
+            this.nodeDFS.add(nodeDFSChild);
         }
     }
 
     public static void main(String[] args) {
         int[] estadoInicial = new int[]{4,2,3,1};
         int[] estadoFinal = new int[]{1,2,3,4};
-        final BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
+        final DepthFirstSearch breadthFirstSearch = new DepthFirstSearch();
         long initialTime = System.currentTimeMillis();
-        final NodeBFS nodeDFSSolucion = breadthFirstSearch.search(estadoInicial, estadoFinal).orElseThrow(NullPointerException::new);
+        final NodeDFS nodeDFSSolucion = breadthFirstSearch.search(estadoInicial, estadoFinal).orElseThrow(NullPointerException::new);
         breadthFirstSearch.printSolution(nodeDFSSolucion, (System.currentTimeMillis()-initialTime));
 
     }
 
-    private void printSolution(final NodeBFS solution, long timeElapsed) {
+    private void printSolution(final NodeDFS solution, long timeElapsed) {
         boolean parentNull = false;
-        NodeBFS actualNodeDFS = solution;
+        NodeDFS actualNodeDFS = solution;
         final List<String> estados = new LinkedList<>();
         while(!parentNull) {
             estados.add(actualNodeDFS.toString());

@@ -1,32 +1,32 @@
-package com.apascualco.algoritmos.bfs;
+package com.apascualco.algoritmos.dfs;
 
 import java.util.Arrays;
 
-public final class Node {
+public final class NodeDFS {
 
     private int[] state;
-    private Node parent;
+    private NodeDFS parent;
 
     @SuppressWarnings("unused")
-    private Node() { }
+    private NodeDFS() { }
 
-    private Node(final int[] state) {
+    private NodeDFS(final int[] state) {
         this.state = state;
     }
 
-    static Node of(final int[] dato) {
-        return new Node(dato);
+    static NodeDFS of(final int[] dato) {
+        return new NodeDFS(dato);
     }
 
     int[] getState() {
         return state;
     }
 
-    Node getParent() {
+    NodeDFS getParent() {
         return parent;
     }
 
-    void setParent(final Node parent) {
+    void setParent(final NodeDFS parent) {
         this.parent = parent;
     }
 
@@ -38,8 +38,8 @@ public final class Node {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        Node node = (Node) object;
-        return Arrays.equals(this.state, node.state);
+        NodeDFS nodeBFS = (NodeDFS) object;
+        return Arrays.equals(this.state, nodeBFS.state);
 
     }
 

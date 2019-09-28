@@ -1,4 +1,4 @@
-package com.apascualco.algoritmos.bfs;
+package com.apascualco.algoritmos.dfs;
 
 import org.junit.Test;
 
@@ -9,35 +9,35 @@ import java.util.List;
 import static java.util.Objects.isNull;
 import static org.junit.Assert.*;
 
-public class BreadthFirstSearchTest {
+public class DepthFirstSearchTest {
 
-    private BreadthFirstSearch breadthFirstSearch;
+    private DepthFirstSearch depthFirstSearch;
 
-    public BreadthFirstSearchTest() {
-        this.breadthFirstSearch = new BreadthFirstSearch();
+    public DepthFirstSearchTest() {
+        this.depthFirstSearch = new DepthFirstSearch();
     }
 
     @Test
     public void bfs_founded_node() {
         int[] initialState = new int[]{'l','o','a','h'};
         int[] finalState = new int[]{'h','o','l','a'};
-        final NodeBFS nodeBFS = this.breadthFirstSearch.search(initialState, finalState).orElseThrow(NullPointerException::new);
-        assertNotNull(nodeBFS);
-        assertArrayEquals(nodeBFS.getState(), finalState);
-        final List<String> states = getNodeList(nodeBFS);
-        assertEquals(5, states.size());
+        final NodeDFS nodeDFS = this.depthFirstSearch.search(initialState, finalState).orElseThrow(NullPointerException::new);
+        assertNotNull(nodeDFS);
+        assertArrayEquals(nodeDFS.getState(), finalState);
+        final List<String> states = getNodeList(nodeDFS);
+        assertEquals(13, states.size());
     }
 
     @Test(expected = NullPointerException.class)
     public void initial_status_null_should_throw_exception() {
         int[] finalState = new int[]{'h','o','l','a'};
-        this.breadthFirstSearch.search(null, finalState).orElseThrow(NullPointerException::new);
+        this.depthFirstSearch.search(null, finalState).orElseThrow(NullPointerException::new);
     }
 
     @Test(expected = NullPointerException.class)
     public void final_status_null_should_throw_exception() {
         int[] initialState = new int[]{'l','o','a','h'};
-        this.breadthFirstSearch.search(initialState, null).orElseThrow(NullPointerException::new);
+        this.depthFirstSearch.search(initialState, null).orElseThrow(NullPointerException::new);
     }
 
     @Test
@@ -45,8 +45,8 @@ public class BreadthFirstSearchTest {
         int[] initialState = new int[]{4,2,3,1};
         int[] finalState = new int[]{1,2,3,4};
         long initialTime = System.currentTimeMillis();
-        final NodeBFS nodeBFS = this.breadthFirstSearch.search(initialState, finalState).orElseThrow(NullPointerException::new);
-        printSolution(getNodeList(nodeBFS), (System.currentTimeMillis()-initialTime));
+        final NodeDFS nodeDFS = this.depthFirstSearch.search(initialState, finalState).orElseThrow(NullPointerException::new);
+        printSolution(getNodeList(nodeDFS), (System.currentTimeMillis()-initialTime));
     }
 
     private static void printSolution(final List<String> states, long timeElapsed) {
@@ -54,9 +54,9 @@ public class BreadthFirstSearchTest {
         System.out.println("Solution in: " + states.size() + " levels [" + String.join(",", states) + "] time: " + timeElapsed + "ms");
     }
 
-    private List<String> getNodeList(final NodeBFS nodeDFS) {
+    private List<String> getNodeList(final NodeDFS nodeDFS) {
         boolean parentNull = false;
-        NodeBFS current = nodeDFS;
+        NodeDFS current = nodeDFS;
         final List<String> states = new LinkedList<>();
         while(!parentNull) {
             states.add(current.toString());
