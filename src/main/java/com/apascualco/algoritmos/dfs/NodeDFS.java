@@ -38,8 +38,8 @@ public final class NodeDFS {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        NodeDFS nodeBFS = (NodeDFS) object;
-        return Arrays.equals(this.state, nodeBFS.state);
+        NodeDFS nodeDFS = (NodeDFS) object;
+        return Arrays.equals(this.state, nodeDFS.state);
 
     }
 
